@@ -4,9 +4,10 @@ import Link from "next/link";
 
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 
-import Badge from "@/components/ui/Badge";
+
 import Button from "@/components/Button";
 import { Input } from "@/components/ui/input";
+import Badge from "src/components/ui/badge";
 
 export default function OrdersPage() {
 	const orders = [

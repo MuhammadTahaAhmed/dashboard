@@ -1,5 +1,5 @@
 
-import Badge from "@/components/ui/Badge";
+import Badge from "src/components/ui/badge";
 import Separator from "@/components/ui/Separator";
 import Progress from "@/components/ui/Progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
