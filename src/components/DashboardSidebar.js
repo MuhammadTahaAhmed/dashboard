@@ -7,7 +7,7 @@ const links = [
 	{ href: "/dashboard", label: "Dashboard" },
 	{ href: "/dashboard/orders", label: "Orders" },
 	{ href: "/dashboard/profile", label: "Profile" },
-	{ href: "/dashboard/settings", label: "Settings" },
+	{ href: "/dashboard/settings", label: "Setting" },
 ];
 
 export default function DashboardSidebar() {
