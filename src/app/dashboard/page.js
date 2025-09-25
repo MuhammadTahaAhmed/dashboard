@@ -1,10 +1,11 @@
 "use client"
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import StatCard from "components/StatCard";
-import Button from "components/Button";
+import Button from "@/components/Button";
+import DashboardChart from "@/components/DashboardChart";
+import StatCard from "@/components/StatCard";
 
-const DashboardChart = dynamic(() => import("components/DashboardChart"), { ssr: false });
+// const DashboardChart = dynamic(() => import("components/DashboardChart"), { ssr: false });
 
 export default function DashboardPage() {
 	const [userName, setUserName] = useState("");

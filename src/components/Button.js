@@ -1,3 +1,6 @@
+"use client";
+
+
 import Link from "next/link";
 
 export default function Button({ as = "button", href = "#", children, variant = "primary", size = "md", className = "", ...props }) {
