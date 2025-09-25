@@ -149,3 +149,18 @@ main { flex: 1 0 auto; }
 	.dashboard-grid { grid-template-columns: 1fr; }
 	.dashboard-aside { position: static; }
 }
+
+/* Tables */
+.table-responsive { width: 100%; overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+.table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.table thead th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: color-mix(in oklab, var(--foreground) 3%, transparent); border-bottom: 1px solid var(--border); padding: 12px 12px; }
+.table tbody td { padding: 14px 12px; border-bottom: 1px solid var(--border); }
+.table tbody tr:hover { background: color-mix(in oklab, var(--foreground) 4%, transparent); }
+.table tbody tr:last-child td { border-bottom: none; }
+
+/* Badges */
+.badge { display: inline-flex; align-items: center; justify-content: center; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid var(--border); color: var(--surface-contrast); background: color-mix(in oklab, var(--foreground) 4%, transparent); }
+.badge-success { color: #065f46; background: #ecfdf5; border-color: #10b98133; }
+.badge-info { color: #1e3a8a; background: #eef2ff; border-color: #3b82f633; }
+.badge-warning { color: #7c2d12; background: #fff7ed; border-color: #f59e0b33; }
+.badge-danger { color: #7f1d1d; background: #fef2f2; border-color: #ef444433; }
