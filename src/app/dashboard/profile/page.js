@@ -1,38 +1,18 @@
-
-import Badge from "src/components/ui/badge";
-import Separator from "@/components/ui/Separator";
 import Progress from "@/components/ui/Progress";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
+import AvatarEditor from "./AvatarEditor";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import Separator from "@/components/ui/Separator";
 import Button from "@/components/Button";
 import Avatar from "@/components/ui/Avatar";
-import AvatarEditor from "./AvatarEditor";
 
-
-async function getSession() {
-	const controller = new AbortController();
-	const timeout = setTimeout(() => controller.abort(), 1200);
-	try {
-		const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/auth/session`, { cache: "no-store", signal: controller.signal });
-		clearTimeout(timeout);
-		if (!res.ok) return { user: null, offline: true };
-		return await res.json();
-	} catch {
-		clearTimeout(timeout);
-		return { user: null, offline: true };
-	}
-}
-
-export default async function ProfilePage() {
-	const { user, offline } = await getSession();
-	const displayName = user?.name || "Guest";
-	const displayEmail = user?.email || "guest@example.com";
+export default function ProfilePage() {
 	return (
 		<div className="container" style={{ paddingTop: 24, paddingBottom: 48 }}>
 			{/* Header with editable avatar */}
 			<div className="card" style={{ padding: 20 }}>
 				<AvatarEditor
 					defaultSrc="https://api.dicebear.com/9.x/avataaars/svg?seed=neo&backgroundType=gradientLinear&accessories=round&hairColor=2c1b18,8d5524,b55239&clothingColor=0ea5e9,38bdf8,1e293b"
-					name={displayName}
+					// name={displayName}
 				/>
 				<div style={{ marginTop: 16 }}>
 					<Progress value={72} />
