@@ -49,6 +49,7 @@ a { color: inherit; text-decoration: none; }
 /* Layout helpers */
 .body-root { background: var(--background); color: var(--foreground); }
 .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+.dashboard-container { padding-left: 0; }
 .spacer-sm { height: 8px; }
 .spacer-md { height: 16px; }
 .spacer-lg { height: 24px; }
@@ -163,13 +164,24 @@ main { flex: 1 0 auto; }
 /* Dashboard */
 .dashboard-grid { display: grid; grid-template-columns: 240px 1fr; gap: 24px; }
 .dashboard-aside { position: sticky; top: 72px; align-self: start; }
+.dashboard-aside.collapsed { width: 72px; }
+.dashboard-aside.expanded { width: 240px; }
+.sidebar-header { display: flex; justify-content: flex-start; margin-bottom: 8px; }
+.sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--foreground); }
+.sidebar-toggle:hover { background: color-mix(in oklab, var(--foreground) 6%, transparent); }
+.toggle-icon.rot { transform: rotate(180deg); transition: transform .2s ease; }
 .sidebar { display: grid; gap: 6px; }
-.sidebar a { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); color: var(--foreground); background: var(--surface); }
+.sidebar a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); color: var(--foreground); background: var(--surface); }
+.sidebar-icon { display: inline-flex; width: 20px; height: 20px; align-items: center; justify-content: center; }
+.sidebar-label { white-space: nowrap; }
+.dashboard-aside.collapsed .sidebar-label { display: none; }
+.dashboard-aside.collapsed .sidebar { gap: 8px; }
+.dashboard-aside.collapsed .sidebar a { justify-content: center; padding: 12px; }
 .sidebar a:hover { background: color-mix(in oklab, var(--foreground) 6%, transparent); }
 .sidebar a.active { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 25%, transparent); }
 @media (max-width: 900px) {
 	.dashboard-grid { grid-template-columns: 1fr; }
-	.dashboard-aside { position: static; }
+	.dashboard-aside { position: static; width: 100%; }
 }
 
 /* Tables */
