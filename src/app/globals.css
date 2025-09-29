@@ -49,7 +49,8 @@ a { color: inherit; text-decoration: none; }
 /* Layout helpers */
 .body-root { background: var(--background); color: var(--foreground); }
 .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 16px; }
-.dashboard-container { max-width: none; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 16px; }
+.dashboard-container { max-width: none; margin-left: 0; margin-right: 0; padding-left: 8px; padding-right: 16px; }
+.dashboard-container.section-inner { padding-top: 12px; }
 .spacer-sm { height: 8px; }
 .spacer-md { height: 16px; }
 .spacer-lg { height: 24px; }
@@ -162,14 +163,15 @@ main { flex: 1 0 auto; }
 .drawer-close:hover { background: color-mix(in oklab, var(--foreground) 8%, transparent); }
 
 /* Dashboard */
-.dashboard-grid { display: grid; grid-template-columns: 240px 1fr; gap: 24px; }
-.dashboard-aside { position: sticky; top: 72px; align-self: start; }
+.dashboard-grid { display: grid; grid-template-columns: 200px 1fr; gap: 16px; }
+.dashboard-aside { position: sticky; top: 0; align-self: start; }
 .dashboard-aside.collapsed { width: 72px; }
-.dashboard-aside.expanded { width: 240px; }
-.sidebar-header { display: flex; justify-content: flex-start; margin-bottom: 8px; }
-.sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--foreground); }
+.dashboard-aside.expanded { width: 200px; }
+.sidebar-header { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+.sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--foreground); }
 .sidebar-toggle:hover { background: color-mix(in oklab, var(--foreground) 6%, transparent); }
 .toggle-icon.rot { transform: rotate(180deg); transition: transform .2s ease; }
+.dashboard-aside.collapsed .sidebar-header { justify-content: center; }
 .sidebar { display: grid; gap: 6px; }
 .sidebar a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); color: var(--foreground); background: var(--surface); }
 .sidebar-icon { display: inline-flex; width: 20px; height: 20px; align-items: center; justify-content: center; }
