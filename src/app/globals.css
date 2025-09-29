@@ -168,8 +168,9 @@ main { flex: 1 0 auto; }
 .dashboard-aside.collapsed { width: 72px; }
 .dashboard-aside.expanded { width: 200px; }
 .sidebar-header { display: flex; justify-content: flex-end; margin-bottom: 8px; }
-.sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--foreground); }
+.sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--foreground); }
 .sidebar-toggle:hover { background: color-mix(in oklab, var(--foreground) 6%, transparent); }
+.sidebar-toggle:focus-visible { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 25%, transparent); }
 .toggle-icon.rot { transform: rotate(180deg); transition: transform .2s ease; }
 .dashboard-aside.collapsed .sidebar-header { justify-content: center; }
 .sidebar { display: grid; gap: 6px; }
