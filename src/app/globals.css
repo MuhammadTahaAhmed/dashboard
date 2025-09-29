@@ -49,7 +49,7 @@ a { color: inherit; text-decoration: none; }
 /* Layout helpers */
 .body-root { background: var(--background); color: var(--foreground); }
 .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 16px; }
-.dashboard-container { padding-left: 0; }
+.dashboard-container { max-width: none; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 16px; }
 .spacer-sm { height: 8px; }
 .spacer-md { height: 16px; }
 .spacer-lg { height: 24px; }
