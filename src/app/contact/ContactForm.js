@@ -4,6 +4,8 @@ import { useState, useCallback } from "react";
 
 export default function ContactForm() {
     const [status, setStatus] = useState({ state: "idle", message: "" });
+    const [showSuccessToast, setShowSuccessToast] = useState(false);
+    const [errorToast, setErrorToast] = useState("");
 
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
@@ -17,10 +19,14 @@ export default function ContactForm() {
 
         if (!name || !email || !message) {
             setStatus({ state: "error", message: "Please fill out all fields." });
+            setErrorToast("Please fill out all fields.");
+            setTimeout(() => setErrorToast(""), 3500);
             return;
         }
         if (!/^\S+@\S+\.\S+$/.test(email)) {
             setStatus({ state: "error", message: "Please enter a valid email address." });
+            setErrorToast("Please enter a valid email address.");
+            setTimeout(() => setErrorToast(""), 3500);
             return;
         }
 
@@ -36,12 +42,20 @@ export default function ContactForm() {
                 const extra = data.previewUrl ? " (Preview available in console)" : "";
                 if (data.previewUrl) console.log("Email preview:", data.previewUrl);
                 setStatus({ state: "success", message: "Message sent successfully." + extra });
+                setShowSuccessToast(true);
+                setTimeout(() => setShowSuccessToast(false), 3500);
                 form.reset();
             } else {
-                setStatus({ state: "error", message: data?.error || "Failed to send message." });
+                const msg = data?.error || "Failed to send message.";
+                setStatus({ state: "error", message: msg });
+                setErrorToast(msg);
+                setTimeout(() => setErrorToast(""), 3500);
             }
         } catch (err) {
-            setStatus({ state: "error", message: "Network error. Please try again." });
+            const msg = "Network error. Please try again.";
+            setStatus({ state: "error", message: msg });
+            setErrorToast(msg);
+            setTimeout(() => setErrorToast(""), 3500);
         }
     }, []);
 
@@ -64,9 +78,48 @@ export default function ContactForm() {
             <button type="submit" className="btn btn-md btn-primary" disabled={isSubmitting} aria-busy={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Send Message"}
             </button>
-            <div role="status" aria-live="polite" style={{ minHeight: 20, color: status.state === "error" ? "#ef4444" : status.state === "success" ? "#10b981" : undefined }}>
-                {status.message}
-            </div>
+            {/* Removed inline validation text per request */}
+
+            {showSuccessToast && (
+                <div
+                    role="alert"
+                    aria-live="assertive"
+                    style={{
+                        position: "fixed",
+                        right: 16,
+                        top: 16,
+                        background: "#10b981",
+                        color: "white",
+                        padding: "12px 16px",
+                        borderRadius: 8,
+                        boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+                        zIndex: 1000
+                    }}
+                >
+                    Message sent successfully
+                </div>
+            )}
+
+            {Boolean(errorToast) && (
+                <div
+                    role="alert"
+                    aria-live="assertive"
+                    style={{
+                        position: "fixed",
+                        right: 16,
+                        top: 16,
+                        transform: showSuccessToast ? "translateY(56px)" : undefined,
+                        background: "#ef4444",
+                        color: "white",
+                        padding: "12px 16px",
+                        borderRadius: 8,
+                        boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+                        zIndex: 1001
+                    }}
+                >
+                    {errorToast}
+                </div>
+            )}
         </form>
     );
 }
