@@ -50,7 +50,6 @@ export default async function ProfilePage() {
 						<a href="#activity">Activity</a>
 						<a href="#favorites">Favorites</a>
 						<a href="#collabs">Collabs</a>
-						<a href="#settings">Settings</a>
 					</div>
 					<div style={{ marginTop: 24 }}>
 						<div className="card" style={{ padding: 16 }}>
@@ -77,7 +76,7 @@ export default async function ProfilePage() {
 						<TabsList>
 							<TabsTrigger value="overview">Overview</TabsTrigger>
 							<TabsTrigger value="favorites">Favorites</TabsTrigger>
-							<TabsTrigger value="activity">Recent Activity</TabsTrigger>
+							<TabsTrigger value="activity">Activity</TabsTrigger>
 							<TabsTrigger value="collabs">Collabs</TabsTrigger>
 						</TabsList>
 

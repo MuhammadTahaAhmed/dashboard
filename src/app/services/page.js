@@ -1,4 +1,5 @@
-import Card from "components/Card";
+import Card from "@/components/Card";
+
 
 export const metadata = {
 	title: "Services",
