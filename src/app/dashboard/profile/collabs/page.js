@@ -48,12 +48,10 @@ export default function CollabsPage() {
 								</div>
 							</div>
 							<p className="card-text">{c.desc}</p>
-							{openIndex === i ? (
-								<p className="hero-subtitle" style={{ fontSize: 13 }}>{c.cta}</p>
-							) : null}
-							<div className="card-actions" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", alignSelf: "end" }}>
-								<Button size="sm" onClick={() => handleView(i)}>{openIndex === i ? "Hide" : "View"}</Button>
-								<a href="#" className="hero-subtitle" style={{ fontSize: 12 }}>Learn more</a>
+							<p className="hero-subtitle" style={{ fontSize: 13, visibility: openIndex === i ? "visible" : "hidden" }}>{c.cta}</p>
+							<div className="card-actions" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, alignSelf: "end" }}>
+								<Button size="sm" onClick={() => handleView(i)} style={{ width: "100%" }}>{openIndex === i ? "Hide" : "View"}</Button>
+								<Button as="a" href="#" size="sm" variant="ghost" style={{ width: "100%" }}>Learn more</Button>
 							</div>
 						</div>
 					))}
