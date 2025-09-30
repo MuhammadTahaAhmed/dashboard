@@ -8,6 +8,8 @@ import Badge from "@/components/ui/Badge";
 export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 	const [avatarSrc, setAvatarSrc] = useState(defaultSrc);
 	const [open, setOpen] = useState(false);
+	const [shareOpen, setShareOpen] = useState(false);
+	const [shareStatus, setShareStatus] = useState("");
 	const [inputUrl, setInputUrl] = useState("");
 	const fileRef = useRef(null);
 
@@ -40,6 +42,21 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 		setOpen(false);
 	}
 
+	async function webShareProfile() {
+		try {
+			const origin = typeof window !== "undefined" ? window.location.origin : "";
+			const url = `${origin}/dashboard/profile/overview`;
+			if (typeof navigator !== "undefined" && navigator.share) {
+				await navigator.share({ title: `${name}'s profile`, url });
+				setShareStatus("Shared via system share");
+				setTimeout(() => setShareStatus(""), 1500);
+			} else {
+				setShareStatus("System share is not available in this browser");
+				setTimeout(() => setShareStatus(""), 2000);
+			}
+		} catch {}
+	}
+
 	return (
 		<div>
 			<div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
@@ -55,7 +72,7 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 				</div>
 				<div style={{ display: "flex", gap: 8 }}>
 					<Button size="md" onClick={() => setOpen((v) => !v)}>Edit Profile</Button>
-					<Button size="md" variant="ghost">Share</Button>
+					<Button size="md" variant="ghost" onClick={() => setShareOpen((v) => !v)}>Share</Button>
 				</div>
 			</div>
 
@@ -79,6 +96,29 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 							<Button size="sm" variant="ghost" onClick={() => setOpen(false)}>Close</Button>
 						</div>
 					</div>
+				</div>
+			) : null}
+
+
+			{shareOpen ? (
+				<div className="card" style={{ marginTop: 12, padding: 16, display: "grid", gap: 12 }}>
+					<div style={{ display: "grid", gap: 4 }}>
+						<p className="label">Share</p>
+						<p className="hero-subtitle" style={{ fontSize: 13 }}>Send your profile via your device's share sheet.</p>
+					</div>
+					<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+						<div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+							<div style={{ width: 36, height: 36, borderRadius: 10, background: "color-mix(in oklab, var(--primary) 16%, transparent)", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid color-mix(in oklab, var(--primary) 30%, transparent)" }}>
+								<span style={{ fontSize: 18 }}>📤</span>
+							</div>
+							<div>
+								<p style={{ fontWeight: 700 }}>System Share</p>
+								<p className="hero-subtitle" style={{ fontSize: 12 }}>Open native share dialog</p>
+							</div>
+						</div>
+						<Button size="lg" onClick={webShareProfile}>Share</Button>
+					</div>
+					{shareStatus ? <p className="hero-subtitle" style={{ fontSize: 12 }}>{shareStatus}</p> : null}
 				</div>
 			) : null}
 		</div>
