@@ -116,7 +116,7 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 								<p className="hero-subtitle" style={{ fontSize: 12 }}>Open native share dialog</p>
 							</div>
 						</div>
-						<Button size="lg" onClick={webShareProfile}>Share</Button>
+						<Button size="md" onClick={webShareProfile}>Share</Button>
 					</div>
 					{shareStatus ? <p className="hero-subtitle" style={{ fontSize: 12 }}>{shareStatus}</p> : null}
 				</div>
