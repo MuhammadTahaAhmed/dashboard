@@ -139,7 +139,7 @@ export default function NewOrderPage() {
 					/>
 				</div>
             </div>
-          </div>
+          
           {error ? (
             <p className="card-text" style={{ color: "crimson" }}>
               {error}
