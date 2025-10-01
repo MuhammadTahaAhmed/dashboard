@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-
 export async function POST(request) {
 	const contentType = request.headers.get("content-type") || "";
 	let body = {};
@@ -12,13 +11,11 @@ export async function POST(request) {
 		const formData = await request.formData();
 		body = Object.fromEntries(formData.entries());
 	} else {
-		// Fallback attempt as form-encoded
 		try {
 			const formData = await request.formData();
 			body = Object.fromEntries(formData.entries());
 		} catch (e) {}
 	}
-
 	const name = String(body.name || "").trim();
 	const email = String(body.email || "").trim();
 	const message = String(body.message || "").trim();
@@ -27,59 +24,84 @@ export async function POST(request) {
 		return new Response(JSON.stringify({ ok: false, error: "Missing required fields" }), { status: 400, headers: { "content-type": "application/json" } });
 	}
 
-    // Send an email to the address the user entered
-    // Configure SMTP via environment vars
-    const host = process.env.SMTP_HOST;
-    const port = Number(process.env.SMTP_PORT || 587);
-    const user = process.env.SMTP_USER;
-    const pass = process.env.SMTP_PASS;
-    const from = process.env.SMTP_FROM || user;
+	// Validate email format
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	if (!emailRegex.test(email)) {
+		return new Response(JSON.stringify({ ok: false, error: "Invalid email format" }), { status: 400, headers: { "content-type": "application/json" } });
+	}
 
-    try {
-        let transporter;
-        let usingTestAccount = false;
-        if (!host || !user || !pass) {
-            // Dev fallback: create an ethereal.email test account
-            const testAccount = await nodemailer.createTestAccount();
-            transporter = nodemailer.createTransport({
-                host: testAccount.smtp.host,
-                port: testAccount.smtp.port,
-                secure: testAccount.smtp.secure,
-                auth: { user: testAccount.user, pass: testAccount.pass },
-            });
-            usingTestAccount = true;
-        } else {
-            transporter = nodemailer.createTransport({
-                host,
-                port,
-                secure: port === 465,
-                auth: { user, pass },
-            });
-        }
+	try {
 
-        const siteOwnerEmail = process.env.CONTACT_TO_EMAIL || "testingforcursor1@gmail.com";
-        const info = await transporter.sendMail({
-            from,
-            to: siteOwnerEmail, // deliver to site owner's inbox
-            replyTo: email, // so you can reply directly to the visitor
-            subject: `New message from ${name} via Contact Form`,
-            text: `From: ${name} <${email}>\n\n${message}`,
-            html: `<p><strong>From:</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;</p><p><strong>Message:</strong></p><blockquote>${escapeHtml(message)}</blockquote>`,
-        });
+		const transporter = nodemailer.createTransport({
+			service: "gmail",
+			auth: {
+				user: process.env.GMAIL_USER || "mudassiralikhan420@gmail.com",
+				pass: process.env.GMAIL_APP_PASSWORD, 
+			},
+		});
 
-        const previewUrl = usingTestAccount ? nodemailer.getTestMessageUrl(info) : undefined;
-        return new Response(JSON.stringify({ ok: true, previewUrl }), { status: 200, headers: { "content-type": "application/json" } });
-    } catch (err) {
-        console.error("Contact email send failed:", err);
-        return new Response(JSON.stringify({ ok: false, error: "Failed to send email" }), { status: 500, headers: { "content-type": "application/json" } });
-    }
-}
+		// Email content
+		const mailOptions = {
+			from: process.env.GMAIL_USER || "mudassiralikhan420@gmail.com",
+			to: "mudassiralikhan420@gmail.com",
+			subject: `New Contact Form Message from ${name}`,
+			html: `
+				<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+					<h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
+						New Contact Form Submission
+					</h2>
+					
+					<div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+						<h3 style="color: #495057; margin-top: 0;">Contact Details</h3>
+						<p><strong>Name:</strong> ${name}</p>
+						<p><strong>Email:</strong> ${email}</p>
+						<p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+					</div>
+					
+					<div style="background-color: #ffffff; padding: 20px; border: 1px solid #dee2e6; border-radius: 8px;">
+						<h3 style="color: #495057; margin-top: 0;">Message</h3>
+						<p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
+					</div>
+					
+					<div style="margin-top: 20px; padding: 15px; background-color: #e9ecef; border-radius: 8px; font-size: 14px; color: #6c757d;">
+						<p style="margin: 0;">This message was sent from your website contact form.</p>
+					</div>
+				</div>
+			`,
+			text: `
+				New Contact Form Submission
+				
+				Name: ${name}
+				Email: ${email}
+				Date: ${new Date().toLocaleString()}
+				
+				Message:
+				${message}
+				
+				---
+				This message was sent from your website contact form.
+			`,
+		};
 
-function escapeHtml(input) {
-    return String(input)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+		// Send email
+		await transporter.sendMail(mailOptions);
+
+		console.log("Contact form email sent successfully:", { name, email });
+
+		return new Response(JSON.stringify({ ok: true, message: "Message sent successfully" }), { 
+			status: 200, 
+			headers: { "content-type": "application/json" } 
+		});
+
+	} catch (error) {
+		console.error("Error sending email:", error);
+		
+		return new Response(JSON.stringify({ 
+			ok: false, 
+			error: "Failed to send message. Please try again later." 
+		}), { 
+			status: 500, 
+			headers: { "content-type": "application/json" } 
+		});
+	}
 }
