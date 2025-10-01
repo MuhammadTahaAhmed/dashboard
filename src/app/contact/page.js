@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
