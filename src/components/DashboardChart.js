@@ -21,13 +21,13 @@ const sampleData = [
 	{ name: "Jul", revenue: 7200, orders: 265 },
 ];
 
-export default function DashboardChart({ data = sampleData, title = "Revenue vs Orders" }) {
-	return (
-		<div className="card" style={{ padding: 16 }}>
-			<h3 className="card-title" style={{ marginBottom: 12 }}>{title}</h3>
-			<div style={{ width: "100%", height: 320 }}>
-				<ResponsiveContainer>
-					<LineChart data={data} margin={{ top: 8, right: 24, left: 0, bottom: 8 }}>
+export default function DashboardChart({ data = sampleData, title = "Revenue vs Orders", height = 380, frameless = false }) {
+    const content = (
+        <>
+            <h3 className="card-title" style={{ marginBottom: 12 }}>{title}</h3>
+            <div style={{ width: "100%", height }}>
+                <ResponsiveContainer>
+                    <LineChart data={data} margin={{ top: 8, right: 12, left: 0, bottom: 8 }}>
 						<CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
 						<XAxis dataKey="name" stroke="#6b7280" />
 						<YAxis stroke="#6b7280" />
@@ -38,8 +38,14 @@ export default function DashboardChart({ data = sampleData, title = "Revenue vs 
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
-		</div>
-	);
+        </>
+    );
+    if (frameless) return content;
+    return (
+        <div className="card" style={{ padding: 16 }}>
+            {content}
+        </div>
+    );
 }
 
 
