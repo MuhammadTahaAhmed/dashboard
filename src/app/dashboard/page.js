@@ -1,8 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import Button from "@/components/Button";
 import DashboardChart from "@/components/DashboardChart";
+import DashboardColorChart from "@/components/DashboardColorChart";
 import StatCard from "@/components/StatCard";
 
 // const DashboardChart = dynamic(() => import("components/DashboardChart"), { ssr: false });
@@ -26,10 +26,9 @@ export default function DashboardPage() {
 
 	return (
 		<div className="card" style={{ padding: 16 }}>
-			<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-				<h1 className="hero-title" style={{ fontSize: 28 }}>Dashboard</h1>
-				<Button size="sm" variant="primary">New Report</Button>
-			</div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                <h1 className="hero-title" style={{ fontSize: 28 }}>Dashboard</h1>
+            </div>
 			<p className="hero-subtitle" style={{ marginTop: 8 }}>
 				Welcome{userName ? `, ${userName}` : ""} to your dashboard.
 			</p>
@@ -39,9 +38,16 @@ export default function DashboardPage() {
 				<StatCard label="Orders" value="1,287" delta={-3} />
 				<StatCard label="Conversion" value="3.4%" delta={0.6} />
 			</div>
-			<div style={{ marginTop: 16, maxWidth: 1000 }}>
-				<DashboardChart />
-			</div>
+            <div className="card" style={{ padding: 16, marginTop: 16 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 16 }}>
+                    <div>
+                        <DashboardChart frameless height={300} />
+                    </div>
+                    <div>
+                        <DashboardColorChart frameless height={300} />
+                    </div>
+                </div>
+            </div>
 		</div>
 	);
 }
