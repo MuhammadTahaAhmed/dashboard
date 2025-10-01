@@ -1,9 +1,6 @@
 "use client";
-import Button from "@/components/Button";
-import { useState } from "react";
 
 export default function FavoritesPage() {
-	const [openIndex, setOpenIndex] = useState(null);
 	const items = [
 		{
 			title: "Favorite #1",
@@ -43,17 +40,14 @@ export default function FavoritesPage() {
 						<div
 							key={idx}
 							className="card"
-							style={{ height: "100%", display: "grid", gap: 10, gridTemplateRows: "auto auto 1fr auto" }}
+							style={{ height: "100%", display: "grid", gap: 10, gridTemplateRows: "auto auto 1fr" }}
 						>
 							<div
 								className="card-media"
 								style={{ backgroundImage: `url(${item.img})`, backgroundSize: "cover", backgroundPosition: "center" }}
 							/>
 							<h3 className="card-title">{item.title}</h3>
-							<p className="card-text" style={{ visibility: openIndex === idx ? "visible" : "hidden" }}>{item.desc}</p>
-							<div className="card-actions" style={{ alignSelf: "end" }}>
-								<Button size="sm" onClick={() => setOpenIndex((p) => (p === idx ? null : idx))}>{openIndex === idx ? "Hide" : "Open"}</Button>
-							</div>
+							<p className="card-text">{item.desc}</p>
 						</div>
 					))}
 			</div>
