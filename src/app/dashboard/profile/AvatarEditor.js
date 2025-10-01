@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Avatar from "@/components/ui/Avatar";
+import Badge from "src/components/ui/badge";
 import Button from "@/components/Button";
-import Badge from "@/components/ui/Badge";
 
 export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 	const [avatarSrc, setAvatarSrc] = useState(defaultSrc);

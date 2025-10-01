@@ -1,10 +1,10 @@
 import Card from "@/components/Card";
 
-
 export const metadata = {
 	title: "Services",
 	description: "Explore our services and offerings.",
 };
+
 
 const services = [
 	{ title: "Web Development", description: "High-performance websites built with Next.js and React.", imageSrc: "/window.svg" },

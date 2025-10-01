@@ -9,9 +9,13 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "next": "15.5.4",
+    "nodemailer": "^7.0.6",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "rechart": "^0.0.1",
+    "recharts": "^3.2.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

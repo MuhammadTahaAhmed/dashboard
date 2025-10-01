@@ -7,7 +7,7 @@ export const metadata = {
 export default function DashboardLayout({ children }) {
 	return (
 		<section className="section">
-			<div className="container section-inner dashboard-grid">
+            <div className="container dashboard-container section-inner dashboard-grid">
 				<DashboardSidebar />
 				<div>{children}</div>
 			</div>
