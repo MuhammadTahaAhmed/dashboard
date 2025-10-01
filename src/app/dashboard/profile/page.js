@@ -14,17 +14,17 @@ export default function ProfilePage() {
                 <div style={{ display: "grid", gap: 8, marginTop: 5 }}>
                     <p className="hero-subtitle" style={{ fontSize: 15,  }}>Why shop with us</p>
 					<ul style={{ display: "grid", gap: 6, listStyle: "none", padding: 0, margin: 0 }}>
-						<li style={{ display: "grid", gridTemplateColumns: "20px 1fr", alignItems: "center", columnGap: 8, minHeight: 28 }}>
-							<span aria-hidden style={{ width: 20, height: 20, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>🔒</span>
-							<span style={{ lineHeight: 1.4 }}>Secure payments and data protection</span>
+						<li style={{ display: "grid", gridTemplateColumns: "18px 1fr", alignItems: "center", columnGap: 8, minHeight: 24 }}>
+							<span aria-hidden style={{ width: 18, height: 18, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>🔒</span>
+							<span style={{ lineHeight: 1.3 }}>Secure payments and data protection</span>
 						</li>
-						<li style={{ display: "grid", gridTemplateColumns: "20px 1fr", alignItems: "center", columnGap: 8, minHeight: 28 }}>
-							<span aria-hidden style={{ width: 20, height: 20, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>⚡</span>
-							<span style={{ lineHeight: 1.4 }}>Fast shipping and real‑time order tracking</span>
+						<li style={{ display: "grid", gridTemplateColumns: "18px 1fr", alignItems: "center", columnGap: 8, minHeight: 24 }}>
+							<span aria-hidden style={{ width: 18, height: 18, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>⚡</span>
+							<span style={{ lineHeight: 1.3 }}>Fast shipping and real‑time order tracking</span>
 						</li>
-						<li style={{ display: "grid", gridTemplateColumns: "20px 1fr", alignItems: "center", columnGap: 8, minHeight: 28 }}>
-							<span aria-hidden style={{ width: 20, height: 20, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>🛠️</span>
-							<span style={{ lineHeight: 1.4 }}>Hassle‑free returns and dedicated support</span>
+						<li style={{ display: "grid", gridTemplateColumns: "18px 1fr", alignItems: "center", columnGap: 8, minHeight: 24 }}>
+							<span aria-hidden style={{ width: 18, height: 18, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>🛠️</span>
+							<span style={{ lineHeight: 1.3 }}>Hassle‑free returns and dedicated support</span>
 						</li>
 					</ul>
                 </div>
