@@ -16,7 +16,6 @@ export function Tabs({ defaultValue, children, className = "" }) {
 		</div>
 	);
 }
-
 export function TabsList({ children, value, setValue }) {
 	return (
 		<div className="ui-tabs-list">
