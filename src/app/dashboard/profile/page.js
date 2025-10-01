@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Progress from "@/components/ui/Progress";
 import AvatarEditor from "./AvatarEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
@@ -147,4 +148,10 @@ export default function ProfilePage() {
 			</div>
 		</div>
 	);
+=======
+import { redirect } from "next/navigation";
+
+export default function ProfilePage() {
+	redirect("/dashboard/profile/overview");
+>>>>>>> haris
 }
