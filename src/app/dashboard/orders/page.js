@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -15,62 +15,38 @@ import { Input } from "@/components/ui/input";
 import Badge from "src/components/ui/badge";
 
 export default function OrdersPage() {
-  const initialOrders = [
-    {
-      id: "ORD-1001",
-      date: "2025-09-10",
-      customer: "Alice Johnson",
-      total: 129.99,
-      status: "Shipped",
-    },
-    {
-      id: "ORD-1002",
-      date: "2025-09-12",
-      customer: "Bob Smith",
-      total: 58.5,
-      status: "Processing",
-    },
-    {
-      id: "ORD-1003",
-      date: "2025-09-14",
-      customer: "Charlie Rivera",
-      total: 249.0,
-      status: "Delivered",
-    },
-    {
-      id: "ORD-1004",
-      date: "2025-09-18",
-      customer: "Dana Lee",
-      total: 89.0,
-      status: "Cancelled",
-    },
-    {
-      id: "ORD-1005",
-      date: "2025-09-20",
-      customer: "Evan Chen",
-      total: 42.75,
-      status: "Processing",
-    },
-    {
-      id: "ORD-1006",
-      date: "2025-09-22",
-      customer: "Finn Lee",
-      total: 100.0,
-      status: "Shipped",
-    },
-    {
-      id: "ORD-1007",
-      date: "2025-09-24",
-      customer: "Gina Chen",
-      total: 150.0,
-      status: "Processing",
-    },
-  ];
-  const [orders, setOrders] = useState(initialOrders);
+  const [orders, setOrders] = useState([]);
 
-  function handleDelete(id) {
+  useEffect(() => {
+    let ignore = false;
+    async function load() {
+      try {
+        const res = await fetch("/api/orders", { cache: "no-store" });
+        const json = await res.json();
+        if (!ignore && json?.ok && Array.isArray(json.orders)) {
+          setOrders(json.orders);
+        }
+      } catch {}
+    }
+    load();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  async function handleDelete(id) {
     if (!window.confirm(`Delete order ${id}? This cannot be undone.`)) return;
-    setOrders((prev) => prev.filter((o) => o.id !== id));
+    try {
+      const res = await fetch("/api/orders", {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const json = await res.json();
+      if (json?.ok) {
+        setOrders((prev) => prev.filter((o) => o.id !== id));
+      }
+    } catch {}
   }
 
   const renderStatus = (status) => {
