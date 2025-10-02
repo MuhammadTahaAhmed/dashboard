@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import Button from "@/components/Button";
 import { Input } from "@/components/ui/input";
-import Badge from "src/components/ui/badge";
 
 export default function OrdersPage() {
   const initialOrders = [
@@ -124,14 +123,41 @@ export default function OrdersPage() {
 
   const totalPages = Math.ceil(filteredAndSortedOrders.length / itemsPerPage);
 
-  function handleDelete(id) {
+  useEffect(() => {
+    let ignore = false;
+    async function load() {
+      try {
+        const res = await fetch("/api/orders", { cache: "no-store" });
+        const json = await res.json();
+        if (!ignore && json?.ok && Array.isArray(json.orders)) {
+          setOrders(json.orders);
+        }
+      } catch {}
+    }
+    load();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  async function handleDelete(id) {
     if (!window.confirm(`Delete order ${id}? This cannot be undone.`)) return;
-    setOrders((prev) => prev.filter((o) => o.id !== id));
-    setSelectedOrders(prev => {
-      const newSet = new Set(prev);
-      newSet.delete(id);
-      return newSet;
-    });
+    try {
+      const res = await fetch("/api/orders", {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const json = await res.json();
+      if (json?.ok) {
+        setOrders((prev) => prev.filter((o) => o.id !== id));
+        setSelectedOrders(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(id);
+          return newSet;
+        });
+      }
+    } catch {}
   }
 
   function handleSort(key) {
