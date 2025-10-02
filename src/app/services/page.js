@@ -1,6 +1,5 @@
 import Card from "@/components/Card";
 
-
 export const metadata = {
 	title: "Services",
 	description: "Explore our services and offerings.",
