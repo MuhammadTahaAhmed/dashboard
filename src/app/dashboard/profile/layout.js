@@ -1,4 +1,3 @@
-import Progress from "@/components/ui/Progress";
 import AvatarEditor from "./AvatarEditor";
 
 export default function ProfileLayout({ children }) {
@@ -9,10 +8,6 @@ export default function ProfileLayout({ children }) {
 					defaultSrc="https://api.dicebear.com/9.x/avataaars/svg?seed=neo&backgroundType=gradientLinear&accessories=round&hairColor=2c1b18,8d5524,b55239&clothingColor=0ea5e9,38bdf8,1e293b"
 					name="Guest"
 				/>
-				<div style={{ marginTop: 16 }}>
-					<Progress value={72} />
-					<p className="hero-subtitle" style={{ fontSize: 13, marginTop: 6 }}>Profile completeness: 72%</p>
-				</div>
 			</div>
 
 			<div style={{ height: 16 }} />
