@@ -25,18 +25,18 @@ export default function AboutPage() {
         { label: "Components", value: 80 },
     ];
 
-    return (
-        <section className="section">
+	return (
+		<section className="section">
             <div className="container section-inner" style={{ maxWidth: 1000 }}>
                 <div className="card" style={{ padding: 16 }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-                        <h1 className="hero-title" style={{ fontSize: 32 }}>About Us</h1>
+				<h1 className="hero-title" style={{ fontSize: 32 }}>About Us</h1>
                         <Button size="sm" variant="primary" onClick={() => document.getElementById("contact-cta")?.scrollIntoView({ behavior: "smooth" })}>Contact</Button>
                     </div>
-                    <p className="hero-subtitle" style={{ marginTop: 8 }}>
-                        We build modern, fast, and accessible web experiences using Next.js and React. Our focus is on clean design, performance, and delightful user interactions.
-                    </p>
-                    <p className="hero-subtitle" style={{ marginTop: 8 }}>
+				<p className="hero-subtitle" style={{ marginTop: 8 }}>
+					We build modern, fast, and accessible web experiences using Next.js and React. Our focus is on clean design, performance, and delightful user interactions.
+				</p>
+				<p className="hero-subtitle" style={{ marginTop: 8 }}>
                         This starter showcases best practices, a minimal aesthetic, and a scalable structure so you can move fast.
                     </p>
                 </div>
@@ -146,7 +146,7 @@ export default function AboutPage() {
                         <a className="btn btn-primary btn-sm" href="/contact">Get in touch</a>
                     </div>
                 </div>
-            </div>
-        </section>
-    );
+			</div>
+		</section>
+	);
 }

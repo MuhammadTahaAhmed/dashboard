@@ -3,18 +3,22 @@
 import { useState } from "react";
 
 export function Tabs({ defaultValue, children, className = "" }) {
-	const [value, setValue] = useState(defaultValue);
-	return (
-		<div className={`ui-tabs ${className}`.trim()} data-value={value}>
-			{Array.isArray(children)
-				? children.map((child) =>
-						child.type?.displayName === "TabsList"
-							? { ...child, props: { ...child.props, value, setValue } }
-							: child
-				  )
-				: children}
-		</div>
-	);
+    const [value, setValue] = useState(defaultValue);
+    const enhanceChild = (child) => {
+        if (!child || !child.type) return child;
+        if (child.type.displayName === "TabsList") {
+            return { ...child, props: { ...child.props, value, setValue } };
+        }
+        if (child.type.displayName === "TabsContent") {
+            return { ...child, props: { ...child.props, current: value } };
+        }
+        return child;
+    };
+    return (
+        <div className={`ui-tabs ${className}`.trim()} data-value={value}>
+            {Array.isArray(children) ? children.map(enhanceChild) : enhanceChild(children)}
+        </div>
+    );
 }
 
 export function TabsList({ children, value, setValue }) {
@@ -46,12 +50,19 @@ export function TabsTrigger({ value, children, current, setValue }) {
 }
 TabsTrigger.displayName = "TabsTrigger";
 
-export function TabsContent({ value, children }) {
-	return (
-		<div className="ui-tab-content" data-value={value}>
-			{children}
-		</div>
-	);
+export function TabsContent({ value, current, children }) {
+    const isActive = current === value;
+    return (
+        <div
+            className="ui-tab-content"
+            data-value={value}
+            style={{ display: isActive ? "block" : "none" }}
+            aria-hidden={!isActive}
+            role="tabpanel"
+        >
+            {children}
+        </div>
+    );
 }
 TabsContent.displayName = "TabsContent";
 

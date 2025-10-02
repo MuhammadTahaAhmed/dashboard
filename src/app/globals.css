@@ -175,6 +175,112 @@ main { flex: 1 0 auto; }
 	.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
+/* Mobile-first responsive utilities */
+.space-y-6 > * + * { margin-top: 24px; }
+.space-y-4 > * + * { margin-top: 16px; }
+.space-y-2 > * + * { margin-top: 8px; }
+
+/* Mobile responsive table improvements */
+@media (max-width: 768px) {
+  .table-responsive {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .mobile-table-card {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    padding: 16px;
+    background: var(--surface);
+  }
+  
+  .mobile-table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .mobile-table-row:last-child {
+    margin-bottom: 0;
+  }
+  
+  .mobile-table-label {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .mobile-table-value {
+    font-weight: 600;
+    text-align: right;
+  }
+  
+  /* Hide standard table on mobile */
+  .table-responsive table {
+    display: none;
+  }
+  
+  /* Show mobile cards instead */
+  .mobile-table-container {
+    display: block;
+  }
+  
+  /* Responsive header adjustments */
+  .hero-title {
+    font-size: clamp(24px, 6vw, 32px) !important;
+  }
+  
+  /* Responsive grid adjustments */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Responsive flex adjustments */
+  .flex-wrap-mobile {
+    flex-wrap: wrap;
+  }
+  
+  .flex-col-mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  /* Status timeline responsive */
+  .status-timeline-mobile {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .status-timeline-mobile .status-step {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .status-timeline-mobile .status-connector {
+    width: 2px;
+    height: 24px;
+    margin: 0;
+  }
+}
+
+/* Desktop table improvements */
+@media (min-width: 769px) {
+  .mobile-table-container {
+    display: none;
+  }
+  
+  .table-responsive table {
+    display: table;
+  }
+}
+
 /* Drawer */
 .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 9998; }
 .drawer-overlay.open { opacity: 1; pointer-events: auto; }

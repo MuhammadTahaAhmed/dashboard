@@ -5,6 +5,9 @@
       "@/*": [
         "src/*"
       ]
-    }
-  }
+    },
+    "checkJs": false,
+    "skipLibCheck": true
+  },
+  "include": ["src", "src/types"]
 }
