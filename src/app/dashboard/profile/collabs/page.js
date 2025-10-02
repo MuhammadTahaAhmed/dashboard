@@ -1,7 +1,4 @@
-"use client";
-import Button from "@/components/Button";
 import Avatar from "@/components/ui/Avatar";
-import { useState } from "react";
 
 export default function CollabsPage() {
 	const collabs = [
@@ -28,17 +25,11 @@ export default function CollabsPage() {
 		},
 	];
 
-	const [openIndex, setOpenIndex] = useState(null);
-
-	function handleView(i) {
-		setOpenIndex((p) => (p === i ? null : i));
-	}
-
 	return (
 		<div className="card" style={{ padding: 16 }}>
 			<div className="grid grid-3" style={{ alignItems: "stretch" }}>
 				{collabs.map((c, i) => (
-						<div key={i} className="card" style={{ height: "100%", display: "grid", gap: 10, gridTemplateRows: "auto auto auto 1fr auto" }}>
+						<div key={i} className="card" style={{ height: "100%", display: "grid", gap: 12, gridTemplateRows: "auto auto 1fr" }}>
 							<div className="card-media" style={{ backgroundImage: `url(${c.img})`, backgroundSize: "cover", backgroundPosition: "center" }} />
 							<div style={{ display: "flex", alignItems: "center", gap: 12 }}>
 								<Avatar size={36} />
@@ -47,11 +38,9 @@ export default function CollabsPage() {
 									<p className="hero-subtitle" style={{ fontSize: 12 }}>{c.members} members</p>
 								</div>
 							</div>
-							<p className="card-text">{c.desc}</p>
-							<p className="hero-subtitle" style={{ fontSize: 13, visibility: openIndex === i ? "visible" : "hidden" }}>{c.cta}</p>
-							<div className="card-actions" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, alignSelf: "end" }}>
-								<Button size="sm" onClick={() => handleView(i)} style={{ width: "100%" }}>{openIndex === i ? "Hide" : "View"}</Button>
-								<Button as="a" href="#" size="sm" variant="ghost" style={{ width: "100%" }}>Learn more</Button>
+							<div style={{ display: "grid", gap: 8 }}>
+								<p className="card-text">{c.desc}</p>
+								<p className="hero-subtitle" style={{ fontSize: 13 }}>{c.cta}</p>
 							</div>
 						</div>
 					))}
