@@ -7,6 +7,8 @@ import Button from "@/components/Button";
 
 export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 	const [avatarSrc, setAvatarSrc] = useState(defaultSrc);
+	const [displayName, setDisplayName] = useState(name);
+	const [editingName, setEditingName] = useState("");
 	const [open, setOpen] = useState(false);
 	const [shareOpen, setShareOpen] = useState(false);
 	const [shareStatus, setShareStatus] = useState("");
@@ -14,8 +16,10 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 	const fileRef = useRef(null);
 
 	useEffect(() => {
-		const saved = typeof window !== "undefined" ? window.localStorage.getItem("profile.avatar") : null;
-		if (saved) setAvatarSrc(saved);
+		const savedAvatar = typeof window !== "undefined" ? window.localStorage.getItem("profile.avatar") : null;
+		const savedName = typeof window !== "undefined" ? window.localStorage.getItem("profile.name") : null;
+		if (savedAvatar) setAvatarSrc(savedAvatar);
+		if (savedName) setDisplayName(savedName);
 	}, []);
 
 	function handleChooseFile() {
@@ -42,12 +46,30 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 		setOpen(false);
 	}
 
+	function handleEditProfile() {
+		setEditingName(displayName);
+		setOpen(true);
+	}
+
+	function saveName() {
+		if (!editingName.trim()) return;
+		const newName = editingName.trim();
+		setDisplayName(newName);
+		try { window.localStorage.setItem("profile.name", newName); } catch {}
+	}
+
+	function cancelEdit() {
+		setEditingName("");
+		setInputUrl("");
+		setOpen(false);
+	}
+
 	async function webShareProfile() {
 		try {
 			const origin = typeof window !== "undefined" ? window.location.origin : "";
 			const url = `${origin}/dashboard/profile/overview`;
 			if (typeof navigator !== "undefined" && navigator.share) {
-				await navigator.share({ title: `${name}'s profile`, url });
+				await navigator.share({ title: `${displayName}'s profile`, url });
 				setShareStatus("Shared via system share");
 				setTimeout(() => setShareStatus(""), 1500);
 			} else {
@@ -60,9 +82,9 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 	return (
 		<div>
 			<div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-				<Avatar src={avatarSrc} alt={name} size={72} />
+				<Avatar src={avatarSrc} alt={displayName} size={72} />
 				<div style={{ flex: 1, minWidth: 220 }}>
-					<h1 className="hero-title" style={{ fontSize: 28, lineHeight: 1.1 }}>{name}</h1>
+					<h1 className="hero-title" style={{ fontSize: 28, lineHeight: 1.1 }}>{displayName}</h1>
 					<p className="hero-subtitle" style={{ marginTop: 6 }}>Design educator • Product thinker • Community builder</p>
 					<div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
 						<Badge>Mentor</Badge>
@@ -71,30 +93,42 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 					</div>
 				</div>
 				<div style={{ display: "flex", gap: 8 }}>
-					<Button size="md" onClick={() => setOpen((v) => !v)}>Edit Profile</Button>
+					<Button size="md" onClick={handleEditProfile}>Edit Profile</Button>
 					<Button size="md" variant="ghost" onClick={() => setShareOpen((v) => !v)}>Share</Button>
 				</div>
 			</div>
 
 			{open ? (
-				<div className="card" style={{ marginTop: 12, padding: 12, display: "grid", gap: 10 }}>
-					<p className="label">Change profile picture</p>
-					<div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-						<input
-							ref={fileRef}
-							type="file"
-							accept="image/*"
-							onChange={handleFileChange}
-							style={{ display: "none" }}
-						/>
-						<Button size="sm" onClick={handleChooseFile}>Upload image</Button>
-					</div>
+				<div className="card" style={{ marginTop: 12, padding: 12, display: "grid", gap: 12 }}>
 					<div style={{ display: "grid", gap: 8 }}>
-						<input className="input" placeholder="Paste image URL (https://...)" value={inputUrl} onChange={(e) => setInputUrl(e.target.value)} />
-						<div style={{ display: "flex", gap: 8 }}>
-							<Button size="sm" onClick={applyUrl}>Apply URL</Button>
-							<Button size="sm" variant="ghost" onClick={() => setOpen(false)}>Close</Button>
+						<p className="label">Edit name</p>
+						<input 
+							className="input" 
+							placeholder="Enter your name" 
+							value={editingName} 
+							onChange={(e) => setEditingName(e.target.value)} 
+						/>
+						<Button size="sm" onClick={saveName}>Save name</Button>
+					</div>
+					
+					<div style={{ display: "grid", gap: 8 }}>
+						<p className="label">Change profile picture</p>
+						<div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+							<input
+								ref={fileRef}
+								type="file"
+								accept="image/*"
+								onChange={handleFileChange}
+								style={{ display: "none" }}
+							/>
+							<Button size="sm" onClick={handleChooseFile}>Upload image</Button>
 						</div>
+						<input className="input" placeholder="Paste image URL (https://...)" value={inputUrl} onChange={(e) => setInputUrl(e.target.value)} />
+						<Button size="sm" onClick={applyUrl}>Apply URL</Button>
+					</div>
+					
+					<div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+						<Button size="sm" variant="ghost" onClick={cancelEdit}>Close</Button>
 					</div>
 				</div>
 			) : null}
