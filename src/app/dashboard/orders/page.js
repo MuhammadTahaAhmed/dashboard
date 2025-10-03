@@ -12,11 +12,60 @@ import {
 } from "@/components/ui/table";
 import Button from "@/components/Button";
 import { Input } from "@/components/ui/input";
-import Badge from "src/components/ui/badge";
 
 export default function OrdersPage() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const initialOrders = [
+    {
+      id: "ORD-1001",
+      date: "2025-09-10",
+      customer: "Alice Johnson",
+      total: 129.99,
+      status: "Shipped",
+    },
+    {
+      id: "ORD-1002",
+      date: "2025-09-12",
+      customer: "Bob Smith",
+      total: 58.5,
+      status: "Processing",
+    },
+    {
+      id: "ORD-1003",
+      date: "2025-09-14",
+      customer: "Charlie Rivera",
+      total: 249.0,
+      status: "Delivered",
+    },
+    {
+      id: "ORD-1004",
+      date: "2025-09-18",
+      customer: "Dana Lee",
+      total: 89.0,
+      status: "Cancelled",
+    },
+    {
+      id: "ORD-1005",
+      date: "2025-09-20",
+      customer: "Evan Chen",
+      total: 42.75,
+      status: "Processing",
+    },
+    {
+      id: "ORD-1006",
+      date: "2025-09-22",
+      customer: "Finn Lee",
+      total: 100.0,
+      status: "Shipped",
+    },
+    {
+      id: "ORD-1007",
+      date: "2025-09-24",
+      customer: "Gina Chen",
+      total: 150.0,
+      status: "Processing",
+    },
+  ];
+  const [orders, setOrders] = useState(initialOrders);
   const [showExport, setShowExport] = useState(false);
   const [format, setFormat] = useState("csv");
   const allFields = ["id", "date", "customer", "total", "status"];
@@ -27,49 +76,6 @@ export default function OrdersPage() {
   const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-
-  // Fetch orders from API
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  // Refresh orders when page becomes visible (when returning from other pages)
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        fetchOrders();
-      }
-    };
-
-    const handleFocus = () => {
-      fetchOrders();
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, []);
-
-  async function fetchOrders() {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/orders');
-      if (response.ok) {
-        const data = await response.json();
-        setOrders(data.orders || []);
-      } else {
-        console.error('Failed to fetch orders');
-      }
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   // Filtered and sorted orders
   const filteredAndSortedOrders = useMemo(() => {
@@ -117,30 +123,41 @@ export default function OrdersPage() {
 
   const totalPages = Math.ceil(filteredAndSortedOrders.length / itemsPerPage);
 
+  useEffect(() => {
+    let ignore = false;
+    async function load() {
+      try {
+        const res = await fetch("/api/orders", { cache: "no-store" });
+        const json = await res.json();
+        if (!ignore && json?.ok && Array.isArray(json.orders)) {
+          setOrders(json.orders);
+        }
+      } catch {}
+    }
+    load();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   async function handleDelete(id) {
     if (!window.confirm(`Delete order ${id}? This cannot be undone.`)) return;
-    
     try {
-      const response = await fetch('/api/orders', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id })
+      const res = await fetch("/api/orders", {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id }),
       });
-      
-      if (response.ok) {
+      const json = await res.json();
+      if (json?.ok) {
         setOrders((prev) => prev.filter((o) => o.id !== id));
         setSelectedOrders(prev => {
           const newSet = new Set(prev);
           newSet.delete(id);
           return newSet;
         });
-      } else {
-        alert('Failed to delete order. Please try again.');
       }
-    } catch (error) {
-      console.error('Error deleting order:', error);
-      alert('Failed to delete order. Please try again.');
-    }
+    } catch {}
   }
 
   function handleSort(key) {
@@ -170,27 +187,11 @@ export default function OrdersPage() {
     }
   }
 
-  async function handleBulkDelete() {
+  function handleBulkDelete() {
     if (selectedOrders.size === 0) return;
     if (!window.confirm(`Delete ${selectedOrders.size} selected orders? This cannot be undone.`)) return;
-    
-    try {
-      // Delete all selected orders
-      const deletePromises = Array.from(selectedOrders).map(id => 
-        fetch('/api/orders', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id })
-        })
-      );
-      
-      await Promise.all(deletePromises);
-      setOrders(prev => prev.filter(order => !selectedOrders.has(order.id)));
-      setSelectedOrders(new Set());
-    } catch (error) {
-      console.error('Error bulk deleting orders:', error);
-      alert('Some orders could not be deleted. Please try again.');
-    }
+    setOrders(prev => prev.filter(order => !selectedOrders.has(order.id)));
+    setSelectedOrders(new Set());
   }
 
   function handleBulkStatusUpdate(newStatus) {
@@ -307,19 +308,10 @@ export default function OrdersPage() {
                 Orders Management
               </h1>
               <p className="hero-subtitle" style={{ fontSize: 16, marginBottom: 16 }}>
-                {loading ? 'Loading orders...' : `${filteredAndSortedOrders.length} orders • ${selectedOrders.size} selected`}
+                {filteredAndSortedOrders.length} orders • {selectedOrders.size} selected
               </p>
             </div>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                onClick={fetchOrders}
-                disabled={loading}
-                style={{ fontSize: '14px' }}
-              >
-                {loading ? '🔄 Loading...' : '🔄 Refresh'}
-              </Button>
               <Link href="/dashboard/orders/new" className="btn btn-primary btn-md" style={{ fontWeight: 600 }}>
                 + New Order
               </Link>
@@ -442,15 +434,7 @@ export default function OrdersPage() {
           </div>
         </div>
 
-        {loading ? (
-          <div style={{ padding: '60px 20px', textAlign: 'center' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🔄</div>
-            <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Loading orders...</h3>
-            <p style={{ color: 'var(--muted)' }}>
-              Please wait while we fetch your orders
-            </p>
-          </div>
-        ) : filteredAndSortedOrders.length === 0 ? (
+        {filteredAndSortedOrders.length === 0 ? (
           <div style={{ padding: '60px 20px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>📦</div>
             <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>No orders found</h3>

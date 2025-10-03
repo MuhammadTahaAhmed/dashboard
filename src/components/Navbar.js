@@ -63,7 +63,12 @@ export default function Navbar() {
 			<header className="header">
 				<div className="container">
 					<div className="header-inner">
-						<Link href="/" className="brand">E-Commerce</Link>
+                        <Link href="/" className="brand" style={{
+                            background: "linear-gradient(90deg, var(--primary), var(--secondary), var(--accent))",
+                            WebkitBackgroundClip: "text",
+                            backgroundClip: "text",
+                            color: "transparent"
+                        }}>E-Commerce</Link>
 						<nav className="nav">
 							<Link href="/">Home</Link>
 							<Link href="/about">About</Link>
