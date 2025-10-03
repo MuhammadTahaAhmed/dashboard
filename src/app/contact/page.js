@@ -65,7 +65,7 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="hero-subtitle" style={{ marginTop: 8 }}>
-            Have a question or want to work together? We'd love to hear from
+            Have a question or want to work together? We&apos;d love to hear from
             you.
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function ContactPage() {
               <div>
                 <h2 className="card-title">Send us a message</h2>
                 <p className="card-text" style={{ marginTop: 8 }}>
-                  Fill out the form and we'll get back to you within 24 hours.
+                  Fill out the form and we&apos;ll get back to you within 24 hours.
                 </p>
 
                 <form

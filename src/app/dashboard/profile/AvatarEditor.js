@@ -138,7 +138,7 @@ export default function AvatarEditor({ defaultSrc, name = "Guest" }) {
 				<div className="card" style={{ marginTop: 12, padding: 16, display: "grid", gap: 12 }}>
 					<div style={{ display: "grid", gap: 4 }}>
 						<p className="label">Share</p>
-						<p className="hero-subtitle" style={{ fontSize: 13 }}>Send your profile via your device's share sheet.</p>
+					<p className="hero-subtitle" style={{ fontSize: 13 }}>Send your profile via your device&apos;s share sheet.</p>
 					</div>
 					<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
 						<div style={{ display: "flex", alignItems: "center", gap: 10 }}>

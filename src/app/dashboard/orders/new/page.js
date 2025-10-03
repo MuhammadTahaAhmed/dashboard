@@ -475,7 +475,7 @@ export default function NewOrderPage() {
           
             {orderCalculations.subtotal > 0 && (
               <div style={{ marginTop: '20px', padding: '12px', background: 'color-mix(in oklab, var(--primary) 6%, transparent)', borderRadius: '8px', fontSize: '12px', color: 'var(--primary)' }}>
-                💡 Order will be set to "Processing" status after creation
+                💡 Order will be set to &quot;Processing&quot; status after creation
               </div>
             )}
           </div>

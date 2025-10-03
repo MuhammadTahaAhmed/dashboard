@@ -240,7 +240,7 @@ export default function AboutPage() {
               margin: "0 auto 32px",
             }}
           >
-            We're a passionate team of developers, designers, and innovators
+            We&apos;re a passionate team of developers, designers, and innovators
             creating exceptional digital experiences that drive business growth.
           </p>
           <div
@@ -488,7 +488,7 @@ export default function AboutPage() {
                       We believe technology should be accessible, intuitive, and
                       transformative. Our team combines technical expertise with
                       creative vision to deliver solutions that not only meet
-                      today's needs but anticipate tomorrow's challenges.
+                      today&apos;s needs but anticipate tomorrow&apos;s challenges.
                     </p>
                   )}
                 </div>
@@ -1021,7 +1021,7 @@ export default function AboutPage() {
                     fontStyle: "italic",
                   }}
                 >
-                  "{testimonial.content}"
+                  &quot;{testimonial.content}&quot;
                 </blockquote>
                 <div>
                   <div style={{ fontWeight: 700, marginBottom: 4 }}>
@@ -1060,7 +1060,7 @@ export default function AboutPage() {
               margin: "0 auto 32px",
             }}
           >
-            Let's discuss how we can help transform your ideas into exceptional
+            Let&apos;s discuss how we can help transform your ideas into exceptional
             digital experiences.
           </p>
           <div
