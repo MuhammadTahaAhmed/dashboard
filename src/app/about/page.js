@@ -26,8 +26,8 @@ export default function AboutPage() {
   // Animated counter effect
   useEffect(() => {
     const targetStats = {
-      clients: 150,
-      projects: 350,
+      clients: 200,
+      projects: 3000,
       satisfaction: 98,
       years: 8,
     };
