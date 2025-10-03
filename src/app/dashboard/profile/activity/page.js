@@ -51,6 +51,8 @@ export default function ActivityPage() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("all");
   const [visible, setVisible] = useState(4);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -186,7 +188,7 @@ export default function ActivityPage() {
                     <div
                       style={{ marginLeft: "auto", display: "flex", gap: 8 }}
                     >
-                      <button className="btn btn-sm btn-ghost">View</button>
+                      <button className="btn btn-sm btn-ghost" onClick={() => { setActive(a); setOpen(true); }}>View</button>
                       {a.type === "save" ? (
                         <button className="btn btn-sm">Open</button>
                       ) : null}
@@ -206,6 +208,34 @@ export default function ActivityPage() {
           <button style={{cursor: "pointer", border: "1px solid rgba(0, 0, 0, 0)", borderRadius: "10px", outline: "none", justifyContent: "center", alignItems: "center", fontWeight: "600", transition: "all .2s", display: "inline-flex",height: "40px",width: "150px"}} onClick={() => setVisible((v) => v + 4)}>
             Load more
           </button>
+        </div>
+      ) : null}
+
+      {open ? (
+        <div role="dialog" aria-modal="true" className="drawer-overlay open" onClick={() => setOpen(false)}>
+          <div className="card" style={{ maxWidth: 560, margin: "10vh auto", padding: 16 }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+              <div style={{ fontWeight: 700 }}>{active ? `${typeToLabel[active.type]}: ${active.title}` : "Activity"}</div>
+              <button className="btn btn-sm btn-ghost" onClick={() => setOpen(false)}>Close</button>
+            </div>
+            {active ? (
+              <div style={{ display: "grid", gap: 10 }}>
+                <div className="text-muted" style={{ fontSize: 12 }}>
+                  {new Date(active.date).toLocaleString()}
+                </div>
+                {active.type === "comment" && active.meta?.snippet ? (
+                  <div className="card" style={{ padding: 12 }}>{active.meta.snippet}</div>
+                ) : null}
+                {active.type === "join" && active.meta?.location ? (
+                  <div className="card" style={{ padding: 12 }}>Location: {active.meta.location}</div>
+                ) : null}
+                <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+                  <button className="btn btn-sm btn-ghost" onClick={() => { try { navigator.clipboard.writeText(JSON.stringify(active, null, 2)); } catch {} }}>Copy JSON</button>
+                  {active.type === "save" ? <a href="#" className="btn btn-sm">Open</a> : null}
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
       ) : null}
     </div>
