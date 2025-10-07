@@ -4,6 +4,7 @@ import EmotionProvider from "./emotion-provider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { CartProvider } from "@/context/CartContext";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -39,9 +40,11 @@ export default function RootLayout({ children }) {
             </head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900 dark:bg-black dark:text-white`}>
                 <EmotionProvider>
-                    <Navbar />
-                    <main>{children}</main>
-                    <Footer />
+                    <CartProvider>
+                        <Navbar />
+                        <main>{children}</main>
+                        <Footer />
+                    </CartProvider>
                 </EmotionProvider>
             </body>
         </html>
