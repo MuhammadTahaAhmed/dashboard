@@ -31,9 +31,17 @@ const IconSettings = (
 	</svg>
 );
 
+const IconStores = (
+	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M12 21s6-4.35 6-10a6 6 0 1 0-12 0c0 5.65 6 10 6 10z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+		<circle cx="12" cy="11" r="2.5" stroke="currentColor" strokeWidth="1.6"/>
+	</svg>
+);
+
 const links = [
 	{ href: "/dashboard", label: "Dashboard", icon: IconDashboard },
 	{ href: "/dashboard/orders", label: "Orders", icon: IconOrders },
+	{ href: "/storein", label: "Stores", icon: IconStores },
 	{ href: "/dashboard/profile", label: "Profile", icon: IconProfile },
 	{ href: "/dashboard/settings", label: "Setting", icon: IconSettings },
 ];
