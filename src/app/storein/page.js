@@ -42,7 +42,7 @@ export default function StoreInPage() {
         <div className="card" style={{ padding: 16 }}>
           <h1 className="hero-title" style={{ fontSize: 32 }}>Our Stores in Pakistan</h1>
           <p className="hero-subtitle" style={{ marginTop: 8 }}>
-            Explore our outlets across Pakistan. Visit the location near you.
+            Explore our outlets across Pakistan. Visit the location nearest to you.
           </p>
         </div>
 
