@@ -73,6 +73,7 @@ export default function Navbar() {
 							<Link href="/">Home</Link>
 							<Link href="/about">About</Link>
 							<Link href="/services">Services</Link>
+							<Link href="/storein">Stores</Link>
 							<Link href="/contact">Contact</Link>
 						<button onClick={toggleTheme} className="btn btn-sm btn-ghost" aria-label="Toggle theme">
 							{theme === "dark" ? (
@@ -121,6 +122,7 @@ export default function Navbar() {
 					<Link href="/" onClick={() => setOpen(false)}>Home</Link>
 					<Link href="/about" onClick={() => setOpen(false)}>About</Link>
 					<Link href="/services" onClick={() => setOpen(false)}>Services</Link>
+					<Link href="/storein" onClick={() => setOpen(false)}>Stores</Link>
 					<Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
 					<button onClick={() => { toggleTheme(); setOpen(false); }} className="btn btn-sm btn-ghost" aria-label="Toggle theme">
 						{theme === "dark" ? (
