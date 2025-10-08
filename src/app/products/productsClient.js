@@ -152,8 +152,9 @@ export default function ProductsClient() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
                 gap: 16,
+                // width: "100vw",
               }}
             >
               {sorted.map((items) => (
@@ -197,25 +198,13 @@ export default function ProductsClient() {
                       </div>
                     </div>
                     <div style={{ display: "flex", gap: 8 }}>
-                      <Link
-                        href={`/products/${items.id}`}
-                        className="btn btn-sm"
-                        style={{ textDecoration: "none" }}
-                      >
+                      <Link href={`/products/${items.id}`} className="btn btn-sm" style={{ textDecoration: "none" }}>
                         Buy
                       </Link>
                       <button
                         className="btn btn-sm"
                         onClick={() =>
-                          addItem(
-                            {
-                              id: items.id,
-                              name: items.name,
-                              price: items.price,
-                              image: items.image,
-                            },
-                            1
-                          )
+                          addItem({ id: items.id, name: items.name, price: items.price, image: items.image }, 1)
                         }
                       >
                         Add to Cart
@@ -231,14 +220,9 @@ export default function ProductsClient() {
                             return s;
                           });
                           const prevList = products;
-                          setProducts((p) =>
-                            p.filter((x) => x.id !== items.id)
-                          );
+                          setProducts((p) => p.filter((x) => x.id !== items.id));
                           try {
-                            await fetch(
-                              `https://dummyjson.com/products/${items.id}`,
-                              { method: "DELETE" }
-                            );
+                            await fetch(`https://dummyjson.com/products/${items.id}`, { method: "DELETE" });
                           } catch (e) {
                             setProducts(prevList);
                           } finally {

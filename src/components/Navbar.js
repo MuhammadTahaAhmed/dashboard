@@ -37,10 +37,7 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [open]);
-
-  // Theme initialize and apply
   useEffect(() => {
-    // Read stored preference or respect system
     let stored = "";
     try {
       stored = localStorage.getItem("theme") || "";
@@ -101,7 +98,7 @@ export default function Navbar() {
               <Link href="/products">Products</Link>
               <Link href="/services">Services</Link>
               <Link href="/contact">Contact</Link>
-              <Link href="/cart" className="btn btn-sm btn-ghost" style={{ position: "relative" }}>
+              <Link href="/cart" className="btn btn-sm btn-ghost " style={{ position: "relative" , padding: "6px 12px", fontSize: 15, textDecoration: "none",borderColor: "var(--border)"}}>
                 Cart
                 {totalCount > 0 ? (
                   <span
@@ -130,7 +127,6 @@ export default function Navbar() {
                 aria-label="Toggle theme"
               >
                 {theme === "dark" ? (
-                  // Sun icon (switch to light)
                   <svg
                     width="18"
                     height="18"
@@ -153,7 +149,6 @@ export default function Navbar() {
                     />
                   </svg>
                 ) : (
-                  // Moon icon (switch to dark)
                   <svg
                     width="18"
                     height="18"
@@ -206,14 +201,10 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-
-      {/* Drawer Overlay */}
       <div
         className={`drawer-overlay ${open ? "open" : ""}`}
         onClick={() => setOpen(false)}
       />
-
-      {/* Drawer Panel */}
       <aside
         className={`drawer ${open ? "open" : ""}`}
         role="dialog"

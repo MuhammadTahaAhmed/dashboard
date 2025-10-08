@@ -73,7 +73,7 @@ export default function AddProductPage() {
           <input
             className="input"
             value={form.price}
-            onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
+            onChange={(e) => setForm((f) =>({ ...f, price: e.target.value }))}
             placeholder="Price"
             inputMode="decimal"
           />
