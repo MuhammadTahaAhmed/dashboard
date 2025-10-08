@@ -77,11 +77,11 @@ export default function OrdersPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
-  // Filtered and sorted orders
+ 
   const filteredAndSortedOrders = useMemo(() => {
     let filtered = orders;
 
-    // Apply search filter
+
     if (searchTerm) {
       filtered = filtered.filter(order => 
         order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,12 +90,11 @@ export default function OrdersPage() {
       );
     }
 
-    // Apply status filter
+
     if (statusFilter !== "all") {
       filtered = filtered.filter(order => order.status === statusFilter);
     }
 
-    // Apply sorting
     filtered.sort((a, b) => {
       const aVal = a[sortConfig.key];
       const bVal = b[sortConfig.key];
@@ -115,7 +114,7 @@ export default function OrdersPage() {
     return filtered;
   }, [orders, searchTerm, statusFilter, sortConfig]);
 
-  // Paginated orders
+ 
   const paginatedOrders = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return filteredAndSortedOrders.slice(startIndex, startIndex + itemsPerPage);
