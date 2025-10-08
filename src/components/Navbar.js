@@ -98,7 +98,7 @@ export default function Navbar() {
               <Link href="/products">Products</Link>
               <Link href="/services">Services</Link>
               <Link href="/contact">Contact</Link>
-              <Link href="/cart" className="btn btn-sm btn-ghost " style={{ position: "relative" , padding: "6px 12px", fontSize: 15, textDecoration: "none",borderColor: "var(--border)"}}>
+              <Link href="/cart" style={{ position: "relative" }}>
                 Cart
                 {totalCount > 0 ? (
                   <span
@@ -123,8 +123,8 @@ export default function Navbar() {
               </Link>
               <button
                 onClick={toggleTheme}
-                className="btn btn-sm btn-ghost"
                 aria-label="Toggle theme"
+                type="button"
               >
                 {theme === "dark" ? (
                   <svg

@@ -101,10 +101,9 @@ main { flex: 1 0 auto; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
 .brand { font-weight: 600; color: var(--surface-contrast); }
 .nav { display: none; gap: 24px; font-size: 14px; align-items: center; }
-.nav a { padding: 8px 10px; border-radius: 8px; border: 1px solid transparent; color: var(--surface-contrast); transition: all .2s ease; }
-.nav a:hover { 
+.nav a, .nav button { padding: 8px 10px; border-radius: 8px; border: none; color: var(--surface-contrast); transition: all .2s ease; background: transparent; cursor: pointer; }
+.nav a:hover, .nav button:hover { 
   background: color-mix(in oklab, var(--foreground) 10%, transparent); 
-  border-color: color-mix(in oklab, var(--foreground) 20%, transparent);
   color: var(--primary);
   transform: translateY(-1px);
 }
